@@ -1,5 +1,5 @@
-import { Controller, Get, Request, Post, UseGuards, HttpStatus } from '@nestjs/common';
-import { LocalAuthGuard, AuthService, JwtAuthGuard, BasicAuthGuard } from './auth';
+import { Controller, Get, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { AuthService, BasicAuthGuard, LocalAuthGuard } from './auth';
 
 @Controller()
 export class AppController {
@@ -10,7 +10,7 @@ export class AppController {
   healthCheck(): any {
     return {
       statusCode: HttpStatus.OK,
-      message: 'OK',
+      message: 'OK, I am changed',
     };
   }
 
