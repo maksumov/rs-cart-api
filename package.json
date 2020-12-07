@@ -10,6 +10,8 @@
     "build": "nest build",
     "docker:build" : "docker build -t cart-api .",
     "docker:history": "docker history --human --format \"{{.CreatedBy}}: {{.Size}}\" cart-api",
+    "docker:start": "docker container run --rm -it --init -p 8080:8080 --name cart-api cart-api",
+    "docker:stop": "docker container stop cart-api",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
