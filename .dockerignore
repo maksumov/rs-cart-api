@@ -1,6 +1,5 @@
 # Remove Git history
 **/.git
 
-**/src
 **/test
 **/node_modules
