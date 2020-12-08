@@ -9,11 +9,11 @@ FROM mhart/alpine-node:12 AS builder
 WORKDIR /usr/src/app
 
 # Install development dependencies
-COPY package*.json ./
+COPY ./*.json ./
 RUN npm ci
 
 # Generate dist
-COPY . .
+COPY ./src ./src
 RUN npm run build
 
 # PRODUCTION stage
