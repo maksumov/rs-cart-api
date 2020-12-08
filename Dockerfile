@@ -1,22 +1,23 @@
 # Sources:
 # 1. https://blog.logrocket.com/containerized-development-nestjs-docker/
 # 2. https://hub.docker.com/r/mhart/alpine-node/
+# 3. https://habr.com/ru/post/448480/
 
 # DEVELOPMENT stage
-FROM mhart/alpine-node:12 as development
+FROM mhart/alpine-node:12 AS development
 
 WORKDIR /usr/src/app
 
 # Install development dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 # Generate dist
 COPY . .
 RUN npm run build
 
 # PRODUCTION stage
-FROM mhart/alpine-node:12 as production
+FROM mhart/alpine-node:12 AS production
 
 # Set NODE_ENV to production mode
 ARG NODE_ENV=production
@@ -26,10 +27,7 @@ WORKDIR /usr/src/app
 
 # Install production dependencies
 COPY package*.json ./
-RUN npm install --only=production
-
-# Add user node
-RUN addgroup -g 2000 node && adduser -u 2000 -G node -s /bin/sh -D node
+RUN npm install pm2 -g && npm ci --only=production && npm cache clean --force && addgroup -g 2000 node && adduser -u 2000 -G node -s /bin/sh -D node
 
 # Final result
 COPY . .
@@ -40,4 +38,4 @@ USER node
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["node", "dist/main.js"]
+CMD ["pm2-runtime", "dist/main.js"]
