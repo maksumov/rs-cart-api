@@ -6,3 +6,5 @@ test
 node_modules
 # these files shouldn't be in container
 .elasticbeanstalk
+# if it exists - it doesn't need at the builder stage
+dist

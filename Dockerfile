@@ -3,8 +3,8 @@
 # 2. https://hub.docker.com/r/mhart/alpine-node/
 # 3. https://habr.com/ru/post/448480/
 
-# DEVELOPMENT stage
-FROM mhart/alpine-node:12 AS development
+# BUILDER stage
+FROM mhart/alpine-node:12 AS builder
 
 WORKDIR /usr/src/app
 
@@ -30,8 +30,7 @@ COPY package*.json ./
 RUN npm install pm2 -g && npm ci --only=production && npm cache clean --force && addgroup -g 2000 node && adduser -u 2000 -G node -s /bin/sh -D node
 
 # Final result
-COPY . .
-COPY --from=development /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/dist ./dist
 
 # Application
 USER node
