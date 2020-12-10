@@ -1,0 +1,10 @@
+# Remove Git history - it doesn't needed in container
+.git
+# Remove tests from production container
+test
+# appropriate node modules will be installed in container directly from Dockerfile
+node_modules
+# these files shouldn't be in container
+.elasticbeanstalk
+# if it exists - it doesn't need at the builder stage
+dist
